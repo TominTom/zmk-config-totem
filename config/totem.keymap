@@ -10,6 +10,8 @@
 //
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
        
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200 
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 15 
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -24,14 +26,18 @@
 #define ADJ  4
 
 &mt {
-  quick-tap-ms = <150>;
+  quick-tap-ms = <175>;
   global-quick-tap;
   flavor = "tap-preferred";
   tapping-term-ms = <200>;
 };
 
 &lt {
-        quick-tap-ms=<150>;
+        quick-tap-ms=<175>;
+};
+
+&soft_off {
+    hold-time-ms = <2000>; 
 };
 
 / {
@@ -39,10 +45,50 @@
             compatible = "zmk,combos";
             combo_esc {
                 timeout-ms = <50>;
-                key-positions = <0 1>;
+                key-positions = <28 29>;
                 bindings = <&kp ESC>;
             };
     };
+
+    behaviors {
+
+        td_quote: td_quote {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp SQT>, <&kp DQT>;
+        };
+
+        td_tilde: td_tilde {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp GRAVE>, <&kp TILDE>;
+        };
+    };
+
+    macros {
+        os_win: os_win {
+                label = "OS_WIN";
+                compatible = "zmk,behavior-macro";
+                #binding-cells = <0>;
+                bindings
+                = <&macro_tap &bt BT_SEL 0>
+                , <&macro_tap &to BASE>
+                ;
+                };
+
+        os_mac: os_mac {
+                label = "OS_MAC";
+                compatible = "zmk,behavior-macro";
+                #binding-cells = <0>;
+                bindings
+                = <&macro_tap &bt BT_SEL 1>
+                , <&macro_tap &to MAC>
+                ;
+                };
+        };
+
 
         keymap {
                 compatible = "zmk,keymap";
@@ -64,10 +110,10 @@ label= "BASE"                              ;
  bindings = <
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
 
-                &kp Q        &kp W       &kp E       &kp R       &kp T           &kp Y          &kp U       &kp I        &kp O       &kp P
-                &mt LSHFT A  &mt LALT S  &mt LCTRL D &mt LGUI F  &kp G           &kp H          &mt RGUI J  &mt RCTRL K  &mt RALT L  &mt RSHFT SEMI
-    &kp LSHFT   &kp Z        &kp X       &kp C       &kp V       &kp B           &kp N          &kp M       &kp COMMA    &kp DOT     &kp FSLH       &kp RSHFT
-                                         &to MAC     &kp ESC     &lt NAV TAB     &lt NUM SPACE  &kp BSPC    &lt ADJ ENTER
+                &kp Q        &kp W       &kp E       &kp R        &kp T           &kp Y          &kp U       &kp I        &kp O       &kp P
+                &mt LSHFT A  &mt LALT S  &mt LCTRL D &mt LGUI F   &kp G           &kp H          &mt RGUI J  &mt RCTRL K  &mt RALT L  &mt RSHFT SEMI
+    &kp LSHFT   &kp Z        &kp X       &kp C       &kp V        &kp B           &kp N          &kp M       &kp COMMA    &kp DOT     &kp FSLH       &kp RSHFT
+                                         &none       &lt ADJ ESC  &lt NAV TAB     &lt NUM SPACE  &kp BSPC    &none
                         >;
                 };
 
@@ -92,7 +138,7 @@ label= "MAC"                               ;
                 &kp Q        &kp W       &kp E       &kp R        &kp T           &kp Y          &kp U        &kp I        &kp O       &kp P
                 &mt LSHFT A  &mt LALT S  &mt LGUI D  &mt LCTRL F  &kp G           &kp H          &mt RCTRL J  &mt RGUI K   &mt RALT L  &mt RSHFT SEMI
     &kp LSHFT   &kp Z        &kp X       &kp C       &kp V        &kp B           &kp N          &kp M        &kp COMMA    &kp DOT     &kp FSLH       &kp RSHFT
-                                         &to BASE      &kp ESC      &lt NAV TAB     &lt NUM SPACE  &kp BSPC     &lt ADJ ENTER
+                                         &none       &kp ESC      &lt NAV TAB     &lt NUM SPACE  &kp BSPC     &lt ADJ ENTER
                         >;
                 };
 
@@ -117,7 +163,7 @@ label= "NUM"                               ;
 
                 &kp EXCL    &kp AT       &kp HASH      &kp DLLR   &kp PRCNT        &kp CARET    &kp AMPS   &kp STAR   &kp LPAR   &kp RPAR
                 &kp KP_N1   &kp KP_N2    &kp KP_N3     &kp KP_N4  &kp KP_N5        &kp KP_N6    &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0
-    &tog 1      &kp DEL     &kp KP_PLUS  &kp KP_MINUS  &kp LBRC   &kp RBRC         &kp KP_EQUAL &kp LBKT   &kp RBKT   &kp BSLH   &kp SQT   &trans      
+    &tog 2      &td_tilde   &kp KP_PLUS  &kp MINUS     &kp LBRC   &kp RBRC         &kp EQUAL    &kp LBKT   &kp RBKT   &kp BSLH   &td_quote   &trans      
                                          &none         &none      &kp LSHFT        &none        &none      &none     
                         >;
                 };
@@ -167,10 +213,10 @@ label= "ADJ"                               ;
  bindings = <
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
 
-                &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                &kp F6      &kp F7      &kp F8      &kp F9      &kp F10
-                &kp F11       &kp C_MUTE    &kp C_VOL_DN  &kp C_VOL_UP  &kp C_BRI_UP          &none       &kp C_PREV  &kp C_PP    &kp C_NEXT  &kp F12  
-    &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &none         &none         &kp C_BRI_DN          &none       &kp F1      &kp F2      &kp F3      &kp F10     &trans         
-                                            &bt BT_PRV    &bt BT_NXT    &none                 &none       &none       &none      
+                &kp F1    &kp F2        &kp F3        &kp F4        &kp F5                &kp F6      &kp F7      &kp F8     &kp F9        &kp F10
+                &kp F11   &kp C_VOL_DN  &kp C_MUTE    &kp C_VOL_UP  &kp C_BRI_UP          &none       &kp C_PREV  &kp C_PP   &kp C_NEXT    &kp F12  
+      &trans    &none     &kp C_PREV    &kp C_PP      &kp C_NEXT    &kp C_BRI_DN          &td_quote   &none       &none      &bt BT_SEL 0  &bt BT_SEL 1   &bt BT_CLR        
+                                            &none         &none     &soft_off             &none       &os_win     &os_mac      
                         >;
                 };                
                
