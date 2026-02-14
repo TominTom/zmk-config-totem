@@ -87,37 +87,6 @@
                 , <&macro_tap &to MAC>
                 ;
                 };
-
-        win_alt_tab: win_alt_tab {
-                label = "ALT_TAB";
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                bindings 
-                = <&macro_press &kp LALT>
-                , <&macro_tap &kp TAB>
-                , <&macro_release &kp LALT>
-                ;
-                };
-
-        mac_alt_tab: mac_alt_tab {
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                bindings
-                = <&macro_press &kp LGUI>
-                , <&macro_tap &kp TAB>
-                , <&macro_release &kp LGUI>
-                ;
-                };
-
-        mac_window: mac_window {
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                bindings
-                = <&macro_press &kp LGUI>
-                , <&macro_tap &kp GRAVE>
-                , <&macro_release &kp LGUI>
-                ;
-                };
         };
 
 
@@ -143,7 +112,7 @@ label= "BASE"                              ;
 
                 &kp Q        &kp W       &kp E       &kp R        &kp T           &kp Y          &kp U       &kp I        &kp O       &kp P
                 &mt LSHFT A  &mt LALT S  &mt LCTRL D &mt LGUI F   &kp G           &kp H          &mt RGUI J  &mt RCTRL K  &mt RALT L  &mt RSHFT SEMI
- &win_alt_tab   &kp Z        &kp X       &kp C       &kp V        &kp B           &kp N          &kp M       &kp COMMA    &kp DOT     &kp FSLH       &kp RSHFT
+    &kp LCTRL   &kp Z        &kp X       &kp C       &kp V        &kp B           &kp N          &kp M       &kp COMMA    &kp DOT     &kp FSLH       &kp RSHFT
                                          &none       &lt ADJ ESC  &lt NAV TAB     &lt NUM SPACE  &kp BSPC    &none
                         >;
                 };
@@ -168,7 +137,7 @@ label= "MAC"                               ;
 
                 &kp Q        &kp W       &kp E       &kp R        &kp T           &kp Y          &kp U        &kp I        &kp O       &kp P
                 &mt LSHFT A  &mt LALT S  &mt LGUI D  &mt LCTRL F  &kp G           &kp H          &mt RCTRL J  &mt RGUI K   &mt RALT L  &mt RSHFT SEMI
- &mac_alt_tab   &kp Z        &kp X       &kp C       &kp V        &kp B           &kp N          &kp M        &kp COMMA    &kp DOT     &kp FSLH       &mac_window
+     &kp LGUI   &kp Z        &kp X       &kp C       &kp V        &kp B           &kp N          &kp M        &kp COMMA    &kp DOT     &kp FSLH       &kp GRAVE 
                                          &none       &lt ADJ ESC  &lt NAV TAB     &lt NUM SPACE  &kp BSPC     &none
                         >;
                 };
