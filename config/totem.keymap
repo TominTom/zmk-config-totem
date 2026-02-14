@@ -33,7 +33,7 @@
 };
 
 &lt {
-        quick-tap-ms=<130>;
+        quick-tap-ms=<175>;
 };
 
 &soft_off {
